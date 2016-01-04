@@ -31,6 +31,8 @@ module I18n
         FileUtils.mkdir_p File.dirname(_file)
         File.open(_file, "w+") do |f|
           f << %(#{self.namespace}.translations || (#{self.namespace}.translations = {});\n)
+          _translations = _translations.sort if I18n::JS.sort_translation_keys?
+
           _translations.each do |locale, translations_for_locale|
             output_translations = I18n::JS.sort_translation_keys? ? Utils.deep_key_sort(translations_for_locale) : translations_for_locale
             f << %(#{self.namespace}.translations["#{locale}"] = I18n.extend((#{self.namespace}.translations["#{locale}"] || {}), #{print_json(output_translations)});\n)
