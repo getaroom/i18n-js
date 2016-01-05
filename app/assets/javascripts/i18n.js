@@ -889,7 +889,7 @@
   }
 
   if ( typeof noGlobal === typeof undefined ) {
-    window.I18n = I18n;
+    global.I18n = I18n;
   }
 
   return I18n;
