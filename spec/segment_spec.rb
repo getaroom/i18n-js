@@ -94,13 +94,14 @@ MyNamespace.translations["fr"] = I18n.extend((MyNamespace.translations["fr"] || 
         I18n::JS.sort_translation_keys = true
       end
 
-      let(:translations){ { en: { "b" => "Test", "a" => "Test" } } }
+      let(:translations) { { en: { "b" => "Test", "a" => "Test" }, de: { "b" => "Prüfung", "a" => "Prüfung" } } }
 
       it 'should output the keys as sorted' do
         file_should_exist "segment.js"
 
         File.open(File.join(temp_path, "segment.js")){|f| f.read}.should eql <<-EOF
 MyNamespace.translations || (MyNamespace.translations = {});
+MyNamespace.translations["de"] = I18n.extend((MyNamespace.translations["de"] || {}), {"a":"Prüfung","b":"Prüfung"});
 MyNamespace.translations["en"] = I18n.extend((MyNamespace.translations["en"] || {}), {"a":"Test","b":"Test"});
         EOF
       end
